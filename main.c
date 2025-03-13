@@ -229,16 +229,30 @@ bool get_button_status (void);
 ** replace the function call with the actual code from the function. 
 */
 /* Enable IRQ interrupts: by clearing the I-bit in the CPSR. */
-__attribute__((__always_inline__)) static inline void __enable_irq(void)
+__attribute__((__always_inline__)) static inline void __enable_irq (void)
 {
     asm volatile ("cpsie i" : : : "memory");
 }
 
 /* Enable IRQ interrupts: by setting the I-bit in the CPSR. */
-__attribute__((__always_inline__)) static inline void __disable_irq(void)
+__attribute__((__always_inline__)) static inline void __disable_irq (void)
 {
     asm volatile ("cpsid i" : : : "memory");
 }
+
+/* Set Main Stack pointer */
+__attribute__((__always_inline__)) static inline void __set_MSP (unsigned long int MainStackTop)
+{
+    asm volatile ("MSR msp, %0\n" : : "r" (MainStackTop) : "sp");
+}
+
+/*                                   Bootloader                                   */
+/* Function pointer type definition, points a void function type. */
+typedef void(*func_ptr)(void);
+/* Address where application will start. */
+#define APPLICATION_ADDRESS 0x08008000ul /* Sector 2, Page 45 from STM32F401RE Reference Manual */
+/* Aplication jump function */
+void load_default_app(void);
 
 int main (void)
 {
@@ -415,4 +429,20 @@ bool get_button_status (void)
     {
         return true;
     }
+}
+/*                                   Bootloader                                   */
+/* Aplication jump function */
+void load_default_app(void)
+{
+    unsigned long int start_app_address;
+    func_ptr load_app; /* load_app is a pointer to function to load application firmware. */
+    printf("Bootloader started...\n\r");
+    delay_ms(500ul);
+    start_app_address = (APPLICATION_ADDRESS + 4ul); /* Application will start at 0x08008004, see STM32F401 reference page 41 for explanation. */
+    /* Jump to application address */
+    load_app = (func_ptr)start_app_address;
+    /* Initialize main stack pointer */
+    __set_MSP(*(unsigned long int*)APPLICATION_ADDRESS);
+    /* Loading application */
+    load_app();
 }
