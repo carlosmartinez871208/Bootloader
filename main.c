@@ -241,7 +241,7 @@ __attribute__((__always_inline__)) static inline void __disable_irq (void)
 }
 
 /* Set Main Stack pointer */
-__attribute__((__always_inline__)) static inline void __set_MSP (unsigned long int MainStackTop)
+__attribute__((__always_inline__)) static inline void __set_MSP (unsigned int MainStackTop)
 {
     asm volatile ("MSR msp, %0\n" : : "r" (MainStackTop) : "sp");
 }
@@ -261,15 +261,10 @@ int main (void)
     init_timebase();
     init_LED();
     init_button();
-    /*load_default_app();*/
+    load_default_app();
     while(1u)
     {
-        if(get_button_status())
-        {
-            printf("Testing bootloader...\n\r");
-        }
-        else
-        { /* Do nothing */}
+
     }
     return EXIT_SUCCESS;
 }
