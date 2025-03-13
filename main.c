@@ -16,9 +16,9 @@
 /* Peripherals base address. */
 #define PERIPHERAL_BASE (0x40000000ul)
 
-/* APB1 base address. */
-#define APB1_PERIPHERAL_OFFSET (0x0ul)
-#define APB1_PERIPHERAL_BASE   (PERIPHERAL_BASE + APB1_PERIPHERAL_OFFSET)
+/* APB2 base address. */
+#define APB2_PERIPHERAL_OFFSET (0x10000ul)
+#define APB2_PERIPHERAL_BASE (PERIPHERAL_BASE + APB2_PERIPHERAL_OFFSET)
 
 /* AHB1 base address. */
 #define AHB1_PERIPHERAL_OFFSET (0x00020000ul)
@@ -36,9 +36,9 @@
 #define RCC_OFFSET (0x3800ul)
 #define RCC_BASE   (AHB1_PERIPHERAL_BASE + RCC_OFFSET)
 
-/* USART2 base address. */
-#define USART2_OFFSET (0x4400ul)
-#define USART2_BASE   (APB1_PERIPHERAL_BASE + USART2_OFFSET)
+/* USART6 base address. */
+#define USART6_OFFSET (0x1400ul)
+#define USART6_BASE (APB2_PERIPHERAL_BASE + USART6_OFFSET)
 
 /* Systick base address */
 #define SYSTICK_OFFSET (0xE010ul)
@@ -56,9 +56,9 @@
 #define RCC_AHB1ENR_OFFSET (0x30ul)
 #define RCC_AHB1ENR (*(volatile unsigned int*)(RCC_BASE + RCC_AHB1ENR_OFFSET))
 
-/* RCC APB1 enable clock register. */
-#define RCC_APB1ENR_OFFSET (0x40ul)
-#define RCC_APB1ENR (*(volatile unsigned int*)(RCC_BASE + RCC_APB1ENR_OFFSET))
+/* RCC APB2 enable clock register. */
+#define RCC_APB2ENR_OFFSET (0x44ul)
+#define RCC_APB2ENR (*(volatile unsigned int*)(RCC_BASE + RCC_APB2ENR_OFFSET))
 
 /* GPIOA port mode register. */
 #define GPIOA_MODER_OFFSET (0x0ul)
@@ -69,32 +69,32 @@
 #define GPIOA_PUPDR (*(volatile unsigned int*)(GPIOA_BASE + GPIOA_PUPDR_OFFSET))
 
 /* GPIOA alternate function high register. */
-#define GPIOA_AFRL_OFFSET (0x20ul)
-#define GPIOA_AFRL (*(volatile unsigned int*)(GPIOA_BASE + GPIOA_AFRL_OFFSET))
+#define GPIOA_AFRH_OFFSET (0x24ul)
+#define GPIOA_AFRH (*(volatile unsigned int*)(GPIOA_BASE + GPIOA_AFRH_OFFSET))
 
-/* USART2 status register. */
-#define USART2_SR_OFFSET (0x0ul)
-#define USART2_SR (*(volatile unsigned int*)(USART2_BASE + USART2_SR_OFFSET))
+/* USART6 status register. */
+#define USART6_SR_OFFSET (0x0ul)
+#define USART6_SR (*(volatile unsigned int*)(USART6_BASE + USART6_SR_OFFSET))
 
 /* USART6 Data register. */
-#define USART2_DR_OFFSET (0x4ul)
-#define USART2_DR (*(volatile unsigned int*)(USART2_BASE + USART2_DR_OFFSET))
+#define USART6_DR_OFFSET (0x4ul)
+#define USART6_DR (*(volatile unsigned int*)(USART6_BASE + USART6_DR_OFFSET))
 
 /* Baudrate register */
-#define USART2_BRR_OFFSET (0x8ul)
-#define USART2_BRR (*(volatile unsigned int*)(USART2_BASE + USART2_BRR_OFFSET))
+#define USART6_BRR_OFFSET (0x8ul)
+#define USART6_BRR (*(volatile unsigned int*)(USART6_BASE + USART6_BRR_OFFSET))
 
 /* Control Register 1 */
-#define USART2_CR1_OFFSET (0xCul)
-#define USART2_CR1 (*(volatile unsigned int*)(USART2_BASE + USART2_CR1_OFFSET))
+#define USART6_CR1_OFFSET (0xCul)
+#define USART6_CR1 (*(volatile unsigned int*)(USART6_BASE + USART6_CR1_OFFSET))
 
 /* Control Register 2 */
-#define USART2_CR2_OFFSET (0x10ul)
-#define USART2_CR2 (*(volatile unsigned int*)(USART2_BASE + USART2_CR2_OFFSET))
+#define USART6_CR2_OFFSET (0x10ul)
+#define USART6_CR2 (*(volatile unsigned int*)(USART6_BASE + USART6_CR2_OFFSET))
 
 /* Control Register 3 */
-#define USART2_CR3_OFFSET (0x14ul)
-#define USART2_CR3 (*(volatile unsigned int*)(USART2_BASE + USART2_CR3_OFFSET))
+#define USART6_CR3_OFFSET (0x14ul)
+#define USART6_CR3 (*(volatile unsigned int*)(USART6_BASE + USART6_CR3_OFFSET))
 
 /* Systick control and status register. */
 #define SYST_CSR_OFFSET (0x0ul)
@@ -126,41 +126,41 @@
 /* Enable clock to IO Port A */
 #define RCC_AHB1ENR_GPIOAEN  (1ul << 0)
 /* Set GPIOA pins 11 and 12 as alternate function  */
-#define GPIOA_MODER2         (2ul << 4)
-#define GPIOA_MODER3         (2ul << 6)
+#define GPIOA_MODER11        (2ul << 22)
+#define GPIOA_MODER12        (2ul << 24)
 /* Configure GPIO AFR(Alternate Function register) for USART6 */
-#define GPIOA_AFRL2_AF7      (7ul << 8)
-#define GPIOA_AFRL3_AF7      (7ul << 12)
+#define GPIOA_AFRH11_AF8     (8ul << 12)
+#define GPIOA_AFRH12_AF8     (8ul << 16)
 /* USART lines must be held high */
-#define GPIOA_PUPDR2        (1ul << 4)
-#define GPIOA_PUPDR3        (1ul << 6)
-/* Enable APB1 peripheral clock. */
-#define RCC_APB1ENR_USART2EN (1ul << 17)
+#define GPIOA_PUPDR11        (1ul << 22)
+#define GPIOA_PUPDR12        (1ul << 24)
+/* Enable APB2 peripheral clock. */
+#define RCC_APB2ENR_USART6EN (1ul << 5)
 /* Baudrate configuration */
-#define USART2_CR1_OVER8     (1ul << 15)
-#define USART2_BRR_MANTISSA  (45ul << 4) /* Mantissa = SystemClock/(8*(2-OVER8)*BAUDRATE) = 84000000/(16*115200) = 45.652 = 45*/
-#define USART2_BRR_FRACTION  (9ul << 0)  /* Fraction = 0.5625 (page 527 Reference manual), 16 * 0.5625 = 9 */
+#define USART6_CR1_OVER8     (1ul << 15)
+#define USART6_BRR_MANTISSA  (45ul << 4) /* Mantissa = SystemClock/(8*(2-OVER8)*BAUDRATE) = 84000000/(16*115200) = 45.652 = 45*/
+#define USART6_BRR_FRACTION  (9ul << 0)  /* Fraction = 0.5625 (page 527 Reference manual), 16 * 0.5625 = 9 */
 /* Enable transciver and receiver */
-#define USART2_CR1_TE        (1ul << 3)
-#define USART2_CR1_RE        (1ul << 2)
+#define USART6_CR1_TE        (1ul << 3)
+#define USART6_CR1_RE        (1ul << 2)
 /* Configure word length */
-#define USART2_CR1_M         (1ul << 12)
+#define USART6_CR1_M         (1ul << 12)
 /* Configure parity control */
-#define USART2_CR1_PCE       (1ul << 10)
+#define USART6_CR1_PCE       (1ul << 10)
 /* Configure stop bits */
-#define USART2_CR2_STOP      (3ul << 12)
+#define USART6_CR2_STOP      (3ul << 12)
 /* Disable RTS*/
-#define USART2_CR3_RTSE      (1ul << 8)
+#define USART6_CR3_RTSE      (1ul << 8)
 /* Disable CTS */
-#define USART2_CR3_CTSE      (1ul << 9)
+#define USART6_CR3_CTSE      (1ul << 9)
 /* Enable USART6 module */
-#define USART2_CR1_UE        (1ul << 13)
+#define USART6_CR1_UE        (1ul << 13)
 /* Check data register empty */
-#define USART2_SR_TXE        (1ul << 7)
+#define USART6_SR_TXE        (1ul << 7)
 /* MASK Data register */
-#define USART2_DR_MASK       (0xFFul << 0)
+#define USART6_DR_MASK       (0xFFul << 0)
 /* Check transmission complete */
-#define USART2_SR_TC         (1ul << 6)
+#define USART6_SR_TC         (1ul << 6)
 /* Enable Systick counter */
 #define SYST_CSR_ENABLE      (1ul << 0)
 /* Enable Systick exception request */
@@ -261,21 +261,15 @@ int main (void)
     init_timebase();
     init_LED();
     init_button();
+    /*load_default_app();*/
     while(1u)
     {
-        /*printf("Hello bootloader\n\r");
-        LED_On();
-        delay_ms(500ul);
-        LED_Off();
-        delay_ms(500ul);*/
         if(get_button_status())
         {
-            LED_On();
+            printf("Testing bootloader...\n\r");
         }
         else
-        {
-            LED_Off();
-        }
+        { /* Do nothing */}
     }
     return EXIT_SUCCESS;
 }
@@ -294,46 +288,46 @@ void init_USART(void)
 {
     /* Enable clock access to GPIOA. */
     RCC_AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
-    /* Set PA2 and PA3 as alternate function mode. */
-    GPIOA_MODER |= GPIOA_MODER2;
-    GPIOA_MODER |= GPIOA_MODER3;
-    /* Set function alternate type: AF7 USART2. See Microcontroller Reference Manual, page 151.*/
-    GPIOA_AFRL |= GPIOA_AFRL2_AF7;
-    GPIOA_AFRL |= GPIOA_AFRL3_AF7;
+    /* Set PA11 and PA12 as alternate function mode. */
+    GPIOA_MODER |= GPIOA_MODER11;
+    GPIOA_MODER |= GPIOA_MODER12;
+    /* Set function alternate type: AF7 USART6. See Microcontroller Reference Manual, page 151.*/
+    GPIOA_AFRH |= GPIOA_AFRH11_AF8;
+    GPIOA_AFRH |= GPIOA_AFRH12_AF8;
     /* USART lines must be held high, it is needed to pull-up resistors. */
-    GPIOA_PUPDR |= GPIOA_PUPDR2;
-    GPIOA_PUPDR |= GPIOA_PUPDR3;
-    /* Enable clock access to UART2. */
-    RCC_APB1ENR |= RCC_APB1ENR_USART2EN;
+    GPIOA_PUPDR |= GPIOA_PUPDR11;
+    GPIOA_PUPDR |= GPIOA_PUPDR12;
+    /* Enable clock access to UART6. */
+    RCC_APB2ENR |= RCC_APB2ENR_USART6EN;
     /* Configure UART baudrate: SysClock= 84 MHz, AHB1= 84 MHz, APB2= 42 Mhz, Oversample= 16, Baudrate= 115200, data= 8 bits, Parity= none, stop bit= 1. */
     /* Oversampling 16 */
-    USART2_CR1 &= ~USART2_CR1_OVER8;
+    USART6_CR1 &= ~USART6_CR1_OVER8;
     /* Configure baudrate */
-    USART2_BRR |= USART2_BRR_MANTISSA;
-    USART2_BRR |= USART2_BRR_FRACTION;
+    USART6_BRR |= USART6_BRR_MANTISSA;
+    USART6_BRR |= USART6_BRR_FRACTION;
     /* Configure transfer direction. */
-    USART2_CR1 |= USART2_CR1_TE;
+    USART6_CR1 |= USART6_CR1_TE;
     /* Configure receive direction. */
-    USART2_CR1 |= USART2_CR1_RE;
+    USART6_CR1 |= USART6_CR1_RE;
     /* Configure word length */
-    USART2_CR1 &= ~USART2_CR1_M;
+    USART6_CR1 &= ~USART6_CR1_M;
     /* Configure parity control */
-    USART2_CR1 &= ~USART2_CR1_PCE;
+    USART6_CR1 &= ~USART6_CR1_PCE;
     /* Configure stop bits: 1 stop bit */
-    USART2_CR2 &= ~USART2_CR2_STOP;
+    USART6_CR2 &= ~USART6_CR2_STOP;
     /* Disable RTS */
-    USART2_CR3 &= ~USART2_CR3_RTSE;
+    USART6_CR3 &= ~USART6_CR3_RTSE;
     /* Disable CTS */
-    USART2_CR3 &= ~USART2_CR3_CTSE;
+    USART6_CR3 &= ~USART6_CR3_CTSE;
     /* Enable UART Module. */
-    USART2_CR1 |= USART2_CR1_UE;
+    USART6_CR1 |= USART6_CR1_UE;
 }
 /* Send char function */
 int __io_putchar(int ch)
 {
-    while(USART2_SR_TXE!=(USART2_SR & USART2_SR_TXE)); /* make sure transmit data is empty. */
-    USART2_DR = (USART2_DR_MASK & ch);
-    while(USART2_SR_TC!=(USART2_SR & USART2_SR_TC)); /* Checks when data has been transmitted. */
+    while(USART6_SR_TXE!=(USART6_SR & USART6_SR_TXE)); /* make sure transmit data is empty */
+    USART6_DR = (USART6_DR_MASK & ch);
+    while(USART6_SR_TC!=(USART6_SR & USART6_SR_TC));
     return ch;
 }
 /*           SysTick functions         */

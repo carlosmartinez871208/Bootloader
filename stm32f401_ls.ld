@@ -8,7 +8,7 @@ ENTRY(Reset_Handler)
 /* Memory definitions */
 MEMORY
 {
-    FLASH (rx): ORIGIN = 0x08000000, LENGTH = 512K  /* Flash size of stm32f401 microcontroller */
+    FLASH (rx): ORIGIN = 0x08000000, LENGTH = 32K  /* Flash bootloader size of stm32f401 microcontroller */
     SRAM (rwx): ORIGIN = 0x20000000, LENGTH = 96K   /* SRAM size of stm32f401 microcontroller */
 }
 
