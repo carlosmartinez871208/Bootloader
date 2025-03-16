@@ -431,7 +431,7 @@ void load_default_app(void)
     func_ptr load_app; /* load_app is a pointer to function to load application firmware. */
     printf("Bootloader started...\n\r");
     delay_ms(500ul);
-    start_app_address = (APPLICATION_ADDRESS + 4ul); /* Application will start at 0x08008004, see STM32F401 reference page 41 for explanation. */
+    start_app_address = *(unsigned int*)(APPLICATION_ADDRESS + 4ul); /* Application will start at 0x08008004, see STM32F401 reference page 41 for explanation. */
     /* Checks if application memory is empty before loading. */
     if(MSP_LOCATION == (*(unsigned int*)APPLICATION_ADDRESS & MSP_MASK))
     {
@@ -439,7 +439,7 @@ void load_default_app(void)
         /* Jump to application address */
         load_app = (func_ptr)start_app_address;
         /* Initialize main stack pointer */
-        __set_MSP(*(unsigned long int*)APPLICATION_ADDRESS);
+        __set_MSP(*(unsigned int*)APPLICATION_ADDRESS);
         /* Loading application */
         load_app();
     }
