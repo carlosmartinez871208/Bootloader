@@ -250,13 +250,39 @@ __attribute__((__always_inline__)) static inline void __set_MSP (unsigned int Ma
 /* Function pointer type definition, points a void function type. */
 typedef void(*func_ptr)(void);
 /* Address where application will start. */
-#define APPLICATION_ADDRESS (0x08008000ul) /* Sector 2, Page 45 from STM32F401RE Reference Manual */
+#define APPLICATION_ADDRESS (0x08018000ul) /* Sector 2, Page 45 from STM32F401RE Reference Manual */
 #define EMPTY_MEMORY        (0xFFFFFFFFul)
 #define MSP_LOCATION        (0x20018000ul)
 #define MSP_MASK            (0x2FF18000ul)
 
 /* Aplication jump function */
 void load_default_app(void);
+
+/*                            Shared APIs                                         */
+/* Struct shared APIS */
+struct bl_shared_apis
+{
+    /* Pointers to functions  */
+    void (*config_CPACR_privileges)(void);
+    void (*init_USART) (void);
+    void (*init_timebase) (void);
+    void (*init_LED) (void);
+    void (*LED_On) (void);
+    void (*LED_Off) (void);
+    void (*init_button) (void);
+    bool (*get_button_status) (void);
+};
+
+struct bl_shared_apis apis_callouts __attribute__((section(".shared_apis"))) = {\
+    config_CPACR_privileges,
+    init_USART,
+    init_timebase,
+    init_LED,
+    LED_On,
+    LED_Off,
+    init_button,
+    get_button_status
+};
 
 int main (void)
 {

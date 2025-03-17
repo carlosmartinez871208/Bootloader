@@ -1,5 +1,8 @@
 # Bootloader
 
+## NOTE:
+Use this Bootloader with Application repository.
+
 ## What is a bootloader?
 A bootloader is a small piece of software that **is reponsible for loading and initializing the main application program** on an microcontroller or other embedded device.
 

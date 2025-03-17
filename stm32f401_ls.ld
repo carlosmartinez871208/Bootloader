@@ -8,8 +8,9 @@ ENTRY(Reset_Handler)
 /* Memory definitions */
 MEMORY
 {
-    FLASH (rx): ORIGIN = 0x08000000, LENGTH = 32K  /* Flash bootloader size of stm32f401 microcontroller */
-    SRAM (rwx): ORIGIN = 0x20000000, LENGTH = 96K   /* SRAM size of stm32f401 microcontroller */
+    FLASH  (rx):  ORIGIN = 0x08000000, LENGTH = 32K   /* Flash bootloader size of stm32f401 microcontroller */
+    SHARED (rx):  ORIGIN = 0x08008000, LENGTH = 64K   /* Shared memory with application. */
+    SRAM   (rwx): ORIGIN = 0x20000000, LENGTH = 96K   /* SRAM size of stm32f401 microcontroller */
 }
 
 /* From vector table (Reference manual page 202) 
@@ -71,6 +72,14 @@ SECTIONS
         . = ALIGN(4); /* This align memoery every 4 bytes  */
         __text_end__ = .; /* '.' indicates contains the current output location counter and it is asigned to global symbol: __text_end__ (end of text section) symbol. */
     } > FLASH
+
+    /* Following section is used for sharing APIs between Bootloader and application. */
+    .shared_apis 0x08008000 :
+    {
+        . = ALIGN(4);
+        *(.shared_apis) /* Merges in this section shared apis between Bootloader and applications */
+        . = ALIGN(4);
+    } > SHARED
 
     _etext = LOADADDR(.data); /* Assigns .data start address as end of text _etext */
 
